@@ -32,7 +32,6 @@ define ->
   updateSnake = (snake,dir,bounds)->
     head = snake[snake.length-1]
     newHead = nextHead(head, dir,bounds)
-    console.log( 'nextHead', newHead )
     snake.push( newHead )
     snake.shift()
 

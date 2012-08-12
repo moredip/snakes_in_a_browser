@@ -1,5 +1,6 @@
 NUM_HORZ_CELLS = 40
 NUM_VERT_CELLS = 40
+TICK_DELAY = 200
 
 require  ['lib/domready','lib/bean','kernel','board','input'], (domready,bean,setupKernel,setupBoard,setupInput)->
 
@@ -19,9 +20,13 @@ require  ['lib/domready','lib/bean','kernel','board','input'], (domready,bean,se
       mostRecentCommand = 'none'
       inputIndicator.innerHTML = ""
 
+    eventLoop = ->
+      handleNextTurn()
+      window.setTimeout( eventLoop, TICK_DELAY )
+    eventLoop()
+
     onInput = (dir)->
       mostRecentCommand = dir
-
 
     input = setupInput()
     bean.add input, {
