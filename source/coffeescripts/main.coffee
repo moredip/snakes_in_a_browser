@@ -1,41 +1,42 @@
-NUM_HORZ_CELLS = 40
-NUM_VERT_CELLS = 40
+require  ['lib/domready','lib/bean','kernel','board','input'], (domready,bean,setupKernel,setupBoard,setupInput)->
 
-generatePixels = (paper)->
-  pixels = []
-  x_size = "#{(0.90/NUM_HORZ_CELLS)*100}%"
-  y_size = "#{(0.90/NUM_VERT_CELLS)*100}%"
+  setup = (paper)->
 
-  for x in [0..(NUM_VERT_CELLS-1)]
-    pixels[x] = []
-    x_offset = "#{(x/NUM_HORZ_CELLS)*100}%"
+    window.board = setupBoard(paper)
+    kernel = setupKernel(board)
 
-    for y in [0..(NUM_HORZ_CELLS-1)]
-      y_offset = "#{(y/NUM_VERT_CELLS)*100}%"
-      rect = paper.rect( x_offset, y_offset, x_size, y_size ).attr('fill',Raphael.getColor())
-      pixels[x][y] = rect
+    inputIndicator = document.getElementById('input-indicator')
 
-  pixels
+    mostRecentCommand = 'none'
 
-createBoard = (paper)->
-  pixels = generatePixels(paper)
+    handleNextTurn = ->
+      kernel.tick( mostRecentCommand )
+      mostRecentCommand = 'none'
+      inputIndicator.innerHTML = ""
+
+    onInput = (dir)->
+      mostRecentCommand = dir
 
 
-  clear = ->
-    _.each  _.flatten(pixels), (r)->
-      r.attr('fill','none')
+    input = setupInput()
+    bean.add input, {
+      'up': -> 
+        inputIndicator.innerHTML = "UP"
+        onInput 'up'
+      'down': -> 
+        inputIndicator.innerHTML = "DOWN"
+        onInput 'down'
+      'left': -> 
+        inputIndicator.innerHTML = "LEFT"
+        onInput 'left'
+      'right': -> 
+        inputIndicator.innerHTML = "RIGHT"
+        onInput 'right'
+      'space': ->
+        handleNextTurn()
+    }
 
-  paint = (x,y)->
-    pixels[x][y].attr('fill', 'hotpink')
-  
-  {
-    clear: clear,
-    paint: paint
-  }
-
-domready ->
-  Raphael "game", 400, 400, ->
-    window.board = createBoard(this)
-
-
+  domready ->
+    Raphael "game", 400, 400, ->
+      setup(this)
 
