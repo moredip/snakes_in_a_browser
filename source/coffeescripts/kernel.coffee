@@ -11,7 +11,7 @@ define ->
   renderSnake = (snake,board)->
     board.clear()
     _.each snake, ([x,y])->
-      board.paint(x,y)
+      board.paintSnake(x,y)
 
   updateSnake = (snake,dir)->
     head = snake[snake.length-1]
@@ -28,6 +28,9 @@ define ->
       dir = newDir unless newDir == 'none'
       updateSnake(snake,dir)
       renderSnake(snake,board)
+
+
+    tick('none')
 
     {
       tick: tick 
