@@ -1,9 +1,14 @@
+NUM_HORZ_CELLS = 40
+NUM_VERT_CELLS = 40
+
 require  ['lib/domready','lib/bean','kernel','board','input'], (domready,bean,setupKernel,setupBoard,setupInput)->
 
   setup = (paper)->
+    bounds = [NUM_HORZ_CELLS,NUM_VERT_CELLS]
 
-    window.board = setupBoard(paper)
-    kernel = setupKernel(board)
+    window.board = setupBoard(paper,bounds)
+    kernel = setupKernel(board,bounds)
+    kernel.tick('none')
 
     inputIndicator = document.getElementById('input-indicator')
 
