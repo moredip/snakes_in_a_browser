@@ -1,5 +1,7 @@
 require 'fileutils'
 
+require "bundler/setup"
+
 def run_guard
   Signal.trap("HUP") { exit }
 
