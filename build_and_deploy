@@ -1,0 +1,4 @@
+#! /bin/sh
+rm -rf public
+ruby build.rb
+s3cmd sync --acl-public --no-delete-removed --reduced-redundancy public/* s3://snakes.thepete.net
