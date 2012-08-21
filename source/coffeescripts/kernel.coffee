@@ -30,18 +30,27 @@ define ->
 
   headOf = (snake)-> snake[snake.length-1]
   coordsSame = ([lx,ly],[rx,ry])-> lx == rx && ly == ry
+  
+  snakeContains = (snake,element)-> 
+    _.detect( snake, (snakePart)->coordsSame(snakePart,element) )
 
   renderSnakeAndFood = (snake,food,board)->
     board.clear()
     board.paintFood(food[0],food[1])
     _.each snake, ([x,y])->
-      board.paintSnake(x,y)
+      board.paintSnakeBody(x,y)
+    board.paintSnakeHead( headOf(snake)... )
 
   updateSnake = (snake,dir,growSnake,bounds)->
     head = headOf(snake)
     newHead = nextHead(head, dir,bounds)
+
+    return true if snakeContains( snake, newHead )
+
     snake.push( newHead )
     snake.shift() unless growSnake
+
+    false
 
   setupKernel = (board,bounds)->
     food = randomCoordWithin(bounds)
@@ -56,10 +65,12 @@ define ->
 
     tick = (newDir)->
       dir = newDir unless newDir == 'none'
-      updateSnake(snake,dir,snakeWantsToGrow, bounds)
+      deadSnake = updateSnake(snake,dir,snakeWantsToGrow, bounds)
       snakeWantsToGrow = false
       snakeEatsFood() if coordsSame( headOf(snake), food )
       renderSnakeAndFood(snake,food,board)
+
+      deadSnake
 
     {
       tick: tick 

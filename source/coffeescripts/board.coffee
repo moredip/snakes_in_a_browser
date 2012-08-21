@@ -21,12 +21,14 @@ define ->
     paint = (x,y,color)->
       renderPixel(x,y,color,paper,bounds)
 
-    paintSnake = (x,y)-> paint(x,y,'hotpink')
+    paintSnakeBody = (x,y)-> paint(x,y,'hotpink')
+    paintSnakeHead = (x,y)-> paint(x,y,'red')
     paintFood = (x,y)-> paint(x,y,'orange')
     
     {
       clear: -> clear(paper)
-      paintSnake: paintSnake
+      paintSnakeBody: paintSnakeBody
+      paintSnakeHead: paintSnakeHead
       paintFood: paintFood
     }
 

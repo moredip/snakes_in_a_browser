@@ -16,13 +16,16 @@ require  ['lib/domready','lib/bean','kernel','board','input'], (domready,bean,se
     mostRecentCommand = 'none'
 
     handleNextTurn = ->
-      kernel.tick( mostRecentCommand )
+      gameOver = kernel.tick( mostRecentCommand )
       mostRecentCommand = 'none'
       inputIndicator.innerHTML = ""
 
+      inputIndicator.innerHTML = "GAME OVER" if gameOver
+      gameOver
+
     eventLoop = ->
-      handleNextTurn()
-      window.setTimeout( eventLoop, TICK_DELAY )
+      gameOver = handleNextTurn()
+      window.setTimeout( eventLoop, TICK_DELAY ) unless gameOver
     eventLoop()
 
     onInput = (dir)->
