@@ -22,10 +22,12 @@ define ->
       renderPixel(x,y,color,paper,bounds)
 
     paintSnake = (x,y)-> paint(x,y,'hotpink')
+    paintFood = (x,y)-> paint(x,y,'orange')
     
     {
       clear: -> clear(paper)
       paintSnake: paintSnake
+      paintFood: paintFood
     }
 
   createBoard

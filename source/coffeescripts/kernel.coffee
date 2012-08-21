@@ -1,4 +1,9 @@
 define ->
+
+  randomCoordWithin = ([maxX,maxY])->
+    x = Math.floor( Math.random() * maxX )
+    y = Math.floor( Math.random() * maxY )
+    [x,y]
   
   wrap = (position,max)->
     if position < 0
@@ -23,26 +28,38 @@ define ->
 
     normalizeLocation( next, bounds )
 
+  headOf = (snake)-> snake[snake.length-1]
+  coordsSame = ([lx,ly],[rx,ry])-> lx == rx && ly == ry
 
-  renderSnake = (snake,board)->
+  renderSnakeAndFood = (snake,food,board)->
     board.clear()
+    board.paintFood(food[0],food[1])
     _.each snake, ([x,y])->
       board.paintSnake(x,y)
 
-  updateSnake = (snake,dir,bounds)->
-    head = snake[snake.length-1]
+  updateSnake = (snake,dir,growSnake,bounds)->
+    head = headOf(snake)
     newHead = nextHead(head, dir,bounds)
     snake.push( newHead )
-    snake.shift()
+    snake.shift() unless growSnake
 
   setupKernel = (board,bounds)->
+    food = randomCoordWithin(bounds)
     snake = [[13,33],[14,33],[15,33]]
     dir = 'right'
+    snakeWantsToGrow = false
+
+    snakeEatsFood = ()->
+      console.log( 'yum!')
+      snakeWantsToGrow = true
+      food = randomCoordWithin(bounds)
 
     tick = (newDir)->
       dir = newDir unless newDir == 'none'
-      updateSnake(snake,dir,bounds)
-      renderSnake(snake,board)
+      updateSnake(snake,dir,snakeWantsToGrow, bounds)
+      snakeWantsToGrow = false
+      snakeEatsFood() if coordsSame( headOf(snake), food )
+      renderSnakeAndFood(snake,food,board)
 
     {
       tick: tick 
