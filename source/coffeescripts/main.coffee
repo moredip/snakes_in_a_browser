@@ -20,7 +20,9 @@ require  ['lib/domready','lib/bean','kernel','board','input'], (domready,bean,se
       mostRecentCommand = 'none'
       inputIndicator.innerHTML = ""
 
-      inputIndicator.innerHTML = "GAME OVER" if gameOver
+      if gameOver
+        window.alert( 'Ah POOP! Game over' )
+        inputIndicator.innerHTML = "GAME OVER"
       gameOver
 
     eventLoop = ->
