@@ -2,7 +2,17 @@
 %script(src="/javascripts/lib/underscore.js")
 %script(src="/javascripts/lib/keymaster.js")
 
-%script(data-main="/javascripts/main" src="/javascripts/lib/require.js")
+%script(src="/javascripts/lib/require.js")
+:javascript
+  require.config({
+    baseUrl: 'javascripts'
+  });
+  //require(["main"]);
+  if( window.location.search == "?dev"){
+    require(["main"]);
+  }else{
+    require(["main.min"]);
+  }
 
 %h1 SNAKE IN YO BROWSER!
 #game

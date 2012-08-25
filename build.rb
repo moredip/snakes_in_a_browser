@@ -21,3 +21,5 @@ sleep 2
 
 Process.kill "HUP", guard_pid
 Process.wait( guard_pid )
+
+`npm run-script minify`

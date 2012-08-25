@@ -1,0 +1,8 @@
+{ 
+	"name" : "snakes_in_a_browser",
+  "version" : "0.0.1",
+  "dependencies" : { "requirejs": "2.0.6" },
+  "scripts":{
+    "minify": "r.js -o minify.js"
+  }
+}
