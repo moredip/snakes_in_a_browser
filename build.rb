@@ -15,7 +15,7 @@ guard_pid = fork { run_guard }
 
 sleep 2
 
-Dir['source/**/*'].each{ |f| FileUtils.touch(f) }
+Dir['{specs,source}/**/*'].each{ |f| FileUtils.touch(f) }
 
 sleep 2
 

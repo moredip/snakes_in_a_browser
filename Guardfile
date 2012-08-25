@@ -1,4 +1,4 @@
-VERBATIM_DIRS = %w{images javascripts stylesheets}
+VERBATIM_DIRS = %w{images javascripts}
 
 ignore /\.swp$/, /^public/
 
