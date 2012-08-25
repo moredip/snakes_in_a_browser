@@ -1,4 +1,4 @@
-VERBATIM_DIRS = %w{images javascripts}
+VERBATIM_DIRS = %w{images javascripts stylesheets}
 
 ignore /\.swp$/, /^public/
 
@@ -9,6 +9,8 @@ guard :haml, :input => 'source', :output => 'public', :run_at_start => true do
 end
 
 guard 'coffeescript', :input => 'source/coffeescripts', :output => 'public/javascripts'
+
+guard 'coffeescript', :input => 'specs', :output => 'public/javascripts/specs/'
 
 VERBATIM_DIRS.each do |dir|
   `mkdir -p public/#{dir}`

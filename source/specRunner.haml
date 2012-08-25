@@ -1,0 +1,23 @@
+!!! 5
+%html
+  %head
+  %link(rel="stylesheet" type="text/css" href="/stylesheets/jasmine.css")
+  %script(src="/javascripts/lib/jasmine.js")
+  %script(src="/javascripts/lib/jasmine-html.js")
+
+  %script(src="/javascripts/lib/require.js")
+  :javascript
+    require.config({
+      baseUrl: '/javascripts'
+    });
+
+  :javascript
+    require([
+      'specs/board_spec' 
+    ], function(){
+      jasmine.getEnv().addReporter(new jasmine.HtmlReporter());    
+      jasmine.getEnv().execute();
+    });
+
+
+
