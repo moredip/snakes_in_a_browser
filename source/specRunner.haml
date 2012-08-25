@@ -1,9 +1,11 @@
 !!! 5
 %html
   %head
-  %link(rel="stylesheet" type="text/css" href="/stylesheets/jasmine.css")
-  %script(src="/javascripts/lib/jasmine.js")
-  %script(src="/javascripts/lib/jasmine-html.js")
+  %link(rel="stylesheet" type="text/css" href="/vendor/jasmine-sinon/jasmine-1.1.0/jasmine.css")
+  %script(src="/vendor/jasmine-sinon/jasmine-1.1.0/jasmine.js")
+  %script(src="/vendor/jasmine-sinon/jasmine-1.1.0/jasmine-html.js")
+  %script(src="/vendor/jasmine-sinon/sinon-1.3.1/sinon-1.3.1.js")
+  %script(src="/vendor/jasmine-sinon/jasmine-sinon.js")
 
   %script(src="/javascripts/lib/require.js")
   :javascript
@@ -15,7 +17,7 @@
     require([
       'specs/board_spec' 
     ], function(){
-      jasmine.getEnv().addReporter(new jasmine.HtmlReporter());    
+      jasmine.getEnv().addReporter(new jasmine.TrivialReporter());    
       jasmine.getEnv().execute();
     });
 

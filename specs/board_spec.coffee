@@ -1,7 +1,16 @@
-define ['board'], (board)->
+define ['board'], (createBoard)->
   describe 'board', ->
-    it 'has a passing test', ->
-      expect(1+1).toBe(2)
+    beforeEach ->
+      @spyPaper = {
+        clear: sinon.spy()
+        rect: sinon.spy()
+      }
+      @bounds = [10,10]
+      @board = createBoard(@spyPaper,@bounds)
 
-    it 'has a failing test', ->
-      expect(1+1).toBe(3)
+    describe '.clear', ->
+      it 'clears the paper then draws a rect', ->
+        @board.clear()
+        expect( @spyPaper.clear ).toHaveBeenCalled()
+        expect( @spyPaper.rect ).toHaveBeenCalled()
+        sinon.assert.callOrder( @spyPaper.clear, @spyPaper.rect )
