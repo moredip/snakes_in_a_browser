@@ -1,8 +1,19 @@
-{ 
-	"name" : "snakes_in_a_browser",
-  "version" : "0.0.1",
-  "dependencies" : { "requirejs": "2.0.6" },
-  "scripts":{
+{
+  "name": "snakes_in_a_browser",
+  "version": "0.0.1",
+  "dependencies": {
+    "requirejs": "2.0.6",
+    "coffee-script": "~1.4.0",
+    "amdefine": "0.0.4"
+  },
+  "devDependencies": {
+    "mocha": "~1.7.4",
+    "sinon": "~1.5.2",
+    "chai": "~1.4.2",
+    "sinon-chai": "~2.3.0"
+  },
+  "scripts": {
+    "test": "mocha --compilers coffee:coffee-script ./specs/config.coffee ./specs/*_spec.coffee",
     "minify": "r.js -o minify.js"
   }
 }

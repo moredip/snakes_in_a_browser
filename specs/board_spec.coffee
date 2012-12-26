@@ -1,6 +1,8 @@
-define ['board'], (createBoard)->
+requirejs = require('requirejs')
+
+requirejs ['cs!board'], (createBoard)->
   describe 'board', ->
-    beforeEach ->
+    before ->
       @spyPaper = {
         clear: sinon.spy()
         rect: sinon.spy()
@@ -11,6 +13,6 @@ define ['board'], (createBoard)->
     describe '.clear', ->
       it 'clears the paper then draws a rect', ->
         @board.clear()
-        expect( @spyPaper.clear ).toHaveBeenCalled()
-        expect( @spyPaper.rect ).toHaveBeenCalled()
-        sinon.assert.callOrder( @spyPaper.clear, @spyPaper.rect )
+        expect( @spyPaper.clear ).to.have.been.called
+        expect( @spyPaper.rect).to.have.been.called
+        expect( @spyPaper.rect).to.have.been.calledAfter(@spyPaper.clear)
