@@ -18,10 +18,16 @@ define ->
   nextHeadingFor = 
     N: 
       S: 'N'
+      L: 'W'
+      R: 'E'
     E: 
       S: 'E'
+      L: 'N'
+      R: 'S'
     S: 
       S: 'S'
+      L: 'E'
+      R: 'W'
     W: 
       S: 'W'
       L: 'S'

@@ -60,8 +60,27 @@ requirejs ['cs!snake'], (createSnake)->
     it 'turns left from west', ->
       snake = createSnake([5,12],'W').move('L')
       expect(snake).singleElementSnake([5,11],'S')
-
     it 'turns right from west', ->
       snake = createSnake([5,12],'W').move('R')
       expect(snake).singleElementSnake([5,13],'N')
 
+    it 'turns left from north', ->
+      snake = createSnake([5,12],'N').move('L')
+      expect(snake).singleElementSnake([4,12],'W')
+    it 'turns right from north', ->
+      snake = createSnake([5,12],'N').move('R')
+      expect(snake).singleElementSnake([6,12],'E')
+
+    it 'turns left from east', ->
+      snake = createSnake([5,12],'E').move('L')
+      expect(snake).singleElementSnake([5,13],'N')
+    it 'turns right from east', ->
+      snake = createSnake([5,12],'E').move('R')
+      expect(snake).singleElementSnake([5,11],'S')
+
+    it 'turns left from south', ->
+      snake = createSnake([5,12],'S').move('L')
+      expect(snake).singleElementSnake([6,12],'E')
+    it 'turns right from south', ->
+      snake = createSnake([5,12],'S').move('R')
+      expect(snake).singleElementSnake([4,12],'W')
