@@ -1,53 +1,55 @@
 define ->
-  headOf = (body)-> body[body.length-1]
 
-  nextHeadFor = 
-    N: (x,y)-> [x,y+1]
-    E: (x,y)-> [x+1,y]
-    S: (x,y)-> [x,y-1]
-    W: (x,y)-> [x-1,y]
+  snakeHeadings = 
+    N:
+      name: 'N'
+      move: (x,y)-> [x,y+1]
+      L: -> snakeHeadings.W
+      R: -> snakeHeadings.E
+    E:
+      name: 'E'
+      move: (x,y)-> [x+1,y]
+      L: -> snakeHeadings.N
+      R: -> snakeHeadings.S
+    S: 
+      name: 'S'
+      move: (x,y)-> [x,y-1]
+      L: -> snakeHeadings.E
+      R: -> snakeHeadings.W
+    W:
+      name: 'W'
+      move: (x,y)-> [x-1,y]
+      L: -> snakeHeadings.S
+      R: -> snakeHeadings.N
+
+  headOf = (body)-> body[body.length-1]
 
   moveBody = (body,heading)->
     currHead = headOf(body)
-    nextHead = nextHeadFor[heading](currHead[0],currHead[1])
+    nextHead = heading.move(currHead[0],currHead[1])
 
     nextBody = body.slice(1)
     nextBody.push( nextHead )
     nextBody
 
-  nextHeadingFor = 
-    N: 
-      S: 'N'
-      L: 'W'
-      R: 'E'
-    E: 
-      S: 'E'
-      L: 'N'
-      R: 'S'
-    S: 
-      S: 'S'
-      L: 'E'
-      R: 'W'
-    W: 
-      S: 'W'
-      L: 'S'
-      R: 'N'
-
   adjustHeading = (currHead, headingChange)->
-    nextHeadingFor[currHead][headingChange]
+    if headingChange == 'S'
+      currHead
+    else
+      currHead[headingChange]()
 
-  createSnake = ( body=[0,0], heading='N')->
+  createSnake = ( body, heading )->
     elements: -> 
       body
     head: ->
       headOf(body)
     heading: -> 
-      heading
+      heading.name
     move: (headingChange='S')-> 
       nextHeading = adjustHeading(heading,headingChange)
       createSnake( moveBody(body,nextHeading), nextHeading )
 
-  createSnakeWithHead = (head,heading)->
-    createSnake( [head], heading )
+  createSnakeWithHead = (head=[0,0],headingStr='N')->
+    createSnake( [head], snakeHeadings[headingStr] )
 
   createSnakeWithHead
