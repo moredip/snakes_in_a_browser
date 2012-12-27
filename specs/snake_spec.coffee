@@ -84,3 +84,23 @@ requirejs ['cs!snake'], (createSnake)->
     it 'turns right from south', ->
       snake = createSnake([5,12],'S').move('R')
       expect(snake).singleElementSnake([4,12],'W')
+
+  describe 'growing', ->
+    it 'grows northwards', ->
+      origSnake = createSnake([2,4],'N')
+      snake = origSnake.move('S',true)
+      expect(snake.elements()).length(2)
+      expect(snake.elements()[0]).deep.equal(origSnake.elements()[0])
+
+    it 'grows northwards and then grows leftwards', ->
+      snake = createSnake([2,4],'N')
+        .move('S',true)
+        .move('L',true)
+      expect(snake.heading()).equal('W')
+      expectedElements = [
+        [2,4],
+        [2,5],
+        [1,5]
+      ]
+      expect(snake.elements()).deep.equal(expectedElements)
+

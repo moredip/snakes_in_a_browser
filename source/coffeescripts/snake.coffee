@@ -24,11 +24,11 @@ define ->
 
   headOf = (body)-> body[body.length-1]
 
-  moveBody = (body,heading)->
+  moveBody = (body,heading,grow)->
     currHead = headOf(body)
     nextHead = heading.move(currHead[0],currHead[1])
 
-    nextBody = body.slice(1)
+    nextBody = body.slice(if grow then 0 else 1)
     nextBody.push( nextHead )
     nextBody
 
@@ -45,9 +45,9 @@ define ->
       headOf(body)
     heading: -> 
       heading.name
-    move: (headingChange='S')-> 
+    move: (headingChange='S', grow=false)-> 
       nextHeading = adjustHeading(heading,headingChange)
-      createSnake( moveBody(body,nextHeading), nextHeading )
+      createSnake( moveBody(body,nextHeading,grow), nextHeading )
 
   createSnakeWithHead = (head=[0,0],headingStr='N')->
     createSnake( [head], snakeHeadings[headingStr] )
